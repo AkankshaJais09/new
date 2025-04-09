@@ -1,7 +1,5 @@
 #include <iostream>
 #include <vector>
-#include <algorithm>
-#include <iomanip>
 #include <climits>
 using namespace std;
 struct Process {
@@ -12,34 +10,56 @@ struct Process {
     int waitingTime;
     int turnaroundTime;
 };
-void takeProcessInput(vector<Process>& processes, int& n) {
-    cout << "Enter the number of processes: ";
+int main() {
+    int n;
+    cout << "Enter number of processes: ";
     cin >> n;
 
+    vector<Process> processes(n);
     for (int i = 0; i < n; ++i) {
-        Process p;
-        p.pid = i + 1;
-        cout << "Enter arrival time of Process " << p.pid << ": ";
-        cin >> p.arrivalTime;
-        cout << "Enter burst time of Process " << p.pid << ": ";
-        cin >> p.burstTime;
-        cout << "Enter priority of Process " << p.pid << ": ";
-        cin >> p.priority;
-        processes.push_back(p);
+        processes[i].pid = i + 1;
+        cout << "Enter arrival time of process " << i + 1 << ": ";
+        cin >> processes[i].arrivalTime;
+        cout << "Enter burst time of process " << i + 1 << ": ";
+        cin >> processes[i].burstTime;
+        cout << "Enter priority of process " << i + 1 << " (lower value = higher priority): ";
+        cin >> processes[i].priority;
     }
-}
+    int currentTime = 0;
+    int completed = 0;
+    vector<bool> isCompleted(n, false);
 
-bool compareArrival(const Process& a, const Process& b) {
-    return a.arrivalTime < b.arrivalTime;
-}
+    while (completed != n) {
+        int idx = -1;
+        int minBurst = INT_MAX;
+        int highestPriority = INT_MAX;
 
-int main() {
-    vector<Process> processes;
-    int n;
-    cout << "=== Hybrid CPU Scheduler (SJF + Priority) ===" << endl;
-    takeProcessInput(processes, n);
-    sort(processes.begin(), processes.end(), compareArrival);
+        for (int i = 0; i < n; ++i) {
+            if (!isCompleted[i] && processes[i].arrivalTime <= currentTime) {
+                if (processes[i].burstTime < minBurst || 
+                   (processes[i].burstTime == minBurst && processes[i].priority < highestPriority)) {
+                    minBurst = processes[i].burstTime;
+                    highestPriority = processes[i].priority;
+                    idx = i;
+                }
+            }
+        }
 
-    cout << "\n[Info] Processes sorted by arrival time.\n";
+        if (idx != -1) {
+            processes[idx].waitingTime = currentTime - processes[idx].arrivalTime;
+            currentTime += processes[idx].burstTime;
+            processes[idx].turnaroundTime = processes[idx].waitingTime + processes[idx].burstTime;
+            isCompleted[idx] = true;
+            completed++;
+        } else {
+            currentTime++; 
+        }
+    }
+    cout << "\nPID\tAT\tBT\tPR\tWT\tTAT\n";
+    for (const auto& p : processes) {
+        cout << p.pid << "\t" << p.arrivalTime << "\t" << p.burstTime << "\t"
+             << p.priority << "\t" << p.waitingTime << "\t" << p.turnaroundTime << endl;
+    }
+
     return 0;
 }
