@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Energy Efficient Scheduler</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>CPU Scheduler</h1>
+    <form id="processForm">
+      <div class="input-group">
+        <label>Arrival Time:</label>
+        <input type="number" id="arrivalTime" required>
+      </div>
+      <div class="input-group">
+        <label>Burst Time:</label>
+        <input type="number" id="burstTime" required>
+      </div>
+      <div class="input-group">
+        <label>Priority:</label>
+        <input type="number" id="priority" required>
+      </div>
+      <button type="submit">Add Process</button>
+    </form>
+
+    <h2>Process List</h2>
+    <ul id="processList"></ul>
+
+    <button id="runScheduler">Run Scheduler</button>
+    <div id="output"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

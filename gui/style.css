@@ -1,0 +1,52 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f3f7f9;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .container {
+    width: 500px;
+    margin: 30px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  }
+  
+  .input-group {
+    margin-bottom: 10px;
+  }
+  
+  label {
+    display: block;
+    font-weight: bold;
+  }
+  
+  input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+  }
+  
+  button {
+    background-color: #0077cc;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  #processList {
+    list-style: none;
+    padding: 0;
+  }
+  
+  #output {
+    margin-top: 20px;
+    background-color: #e9f5ff;
+    padding: 10px;
+    border-radius: 8px;
+  }
+  
